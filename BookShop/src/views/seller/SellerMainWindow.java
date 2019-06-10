@@ -213,7 +213,7 @@ public class SellerMainWindow extends JFrame {
 	
 	public void tableLoad() {
 		List<Book> blist = bookController.getBooks();
-		Object[] columns = {"Id","Author","Title","Pages","Released On","Genre","Price","Quantity"};				
+		Object[] columns = {"Id","Szerzõ","Cím","Oldalszám","Megjelenés","Mûfaj","Ár","Mennyiség"};				
 		tableModel = new DefaultTableModel();
 		tableModel.setColumnIdentifiers(columns);
 		for (Book b : blist) {

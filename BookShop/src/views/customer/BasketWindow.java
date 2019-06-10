@@ -160,7 +160,7 @@ public class BasketWindow extends JFrame {
 		tableModel.setRowCount(0);
 		sumPrice = 0;
 		basket = basketController.getBasket(loggedUser.getUserId());
-		Object[] columns = {"Id","Author","Title","Price","Instance"};
+		Object[] columns = {"Id","Szerzõ","Cím","Ár","Instance"};
 		tableModel.setColumnIdentifiers(columns);
 		for (Book b : basket.getBooks()) {
 			sumPrice += b.getPrice();
@@ -200,12 +200,12 @@ public class BasketWindow extends JFrame {
 			loggedUser.setTransportStrategy(new NoNeed());
 		}
 		Order order = new Order();
-		order.setSumPrice(sumPrice);				
-		orderController.newOrder(loggedUser.transport(order));
-		int orderId = orderController.getLastOrderId();
+		order.setSumPrice(sumPrice);		
 		if(sumPrice == 0) {
 			basketController.notifyForEvent("Üres a kosár!", false);
 		}else {
+			orderController.newOrder(loggedUser.transport(order));
+			int orderId = orderController.getLastOrderId();
 			if(basketController.setOrder(loggedUser.getUserId(), orderId)) {			
 				basketController.notifyForEvent("Rendelés feladva!", true);
 			}else {			
