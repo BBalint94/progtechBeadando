@@ -203,10 +203,14 @@ public class BasketWindow extends JFrame {
 		order.setSumPrice(sumPrice);				
 		orderController.newOrder(loggedUser.transport(order));
 		int orderId = orderController.getLastOrderId();
-		if(basketController.setOrder(loggedUser.getUserId(), orderId)) {			
-			basketController.notifyForEvent("Rendelés feladva!", true);
-		}else {			
-			basketController.notifyForEvent("Rendelés felvétele sikertelen!", false);
+		if(sumPrice == 0) {
+			basketController.notifyForEvent("Üres a kosár!", false);
+		}else {
+			if(basketController.setOrder(loggedUser.getUserId(), orderId)) {			
+				basketController.notifyForEvent("Rendelés feladva!", true);
+			}else {			
+				basketController.notifyForEvent("Rendelés felvétele sikertelen!", false);
+			}
 		}
 	}
 	
