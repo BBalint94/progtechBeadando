@@ -33,7 +33,15 @@ public class NewBookWindow extends JFrame {
 	private JSpinner pagesSpinner;
 	private JSpinner priceSpinner;
 	private JSpinner quantitySpinner;
-	private BookController bookController = BookController.getInstance();
+	private BookController bookController;
+	private JLabel lblAuthor;
+	private JLabel lblTitle;
+	private JLabel lblPages;
+	private JLabel lblReleased;
+	private JLabel lblGenre;
+	private JLabel lblPrice;
+	private JLabel lblQuantity;
+	private JButton btnAdd;
 
 	/**
 	 * Launch the application.
@@ -55,38 +63,39 @@ public class NewBookWindow extends JFrame {
 	 * Create the frame.
 	 */
 	public NewBookWindow() {
-		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		bookController = BookController.getInstance();
+		
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel lblAuthor = new JLabel("Szerzõ:");
+		lblAuthor = new JLabel("Szerzõ:");
 		lblAuthor.setBounds(63, 31, 46, 14);
 		contentPane.add(lblAuthor);
 		
-		JLabel lblTitle = new JLabel("Cím:");
+		lblTitle = new JLabel("Cím:");
 		lblTitle.setBounds(63, 56, 46, 14);
 		contentPane.add(lblTitle);
 		
-		JLabel lblPages = new JLabel("Oldal:");
+		lblPages = new JLabel("Oldal:");
 		lblPages.setBounds(63, 81, 46, 14);
 		contentPane.add(lblPages);
 		
-		JLabel lblReleased = new JLabel("Megjelenés:");
+		lblReleased = new JLabel("Megjelenés:");
 		lblReleased.setBounds(63, 106, 72, 14);
 		contentPane.add(lblReleased);
 		
-		JLabel lblGenre = new JLabel("Mûfaj:");
+		lblGenre = new JLabel("Mûfaj:");
 		lblGenre.setBounds(63, 139, 46, 14);
 		contentPane.add(lblGenre);
 		
-		JLabel lblPrice = new JLabel("Ár:");
+		lblPrice = new JLabel("Ár:");
 		lblPrice.setBounds(63, 164, 46, 14);
 		contentPane.add(lblPrice);
 		
-		JLabel lblQuantity = new JLabel("Mennyiség:");
+		lblQuantity = new JLabel("Mennyiség:");
 		lblQuantity.setBounds(63, 191, 84, 14);
 		contentPane.add(lblQuantity);
 		
@@ -126,14 +135,14 @@ public class NewBookWindow extends JFrame {
 		quantitySpinner.setBounds(162, 188, 63, 20);
 		contentPane.add(quantitySpinner);
 		
-		JButton btnHozzad = new JButton("Hozz\u00E1ad");
-		btnHozzad.addActionListener(new ActionListener() {
+		btnAdd = new JButton("Hozz\u00E1ad");
+		btnAdd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				sendNewBook();			
 			}
 		});
-		btnHozzad.setBounds(319, 210, 89, 23);
-		contentPane.add(btnHozzad);
+		btnAdd.setBounds(319, 210, 89, 23);
+		contentPane.add(btnAdd);
 		
 	}
 	

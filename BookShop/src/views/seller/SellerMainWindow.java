@@ -40,10 +40,10 @@ public class SellerMainWindow extends JFrame {
 	private JPanel contentPane;
 	private JTable table;
 	private JTextField textField;
-	private BookController bookController = BookController.getInstance();
+	private BookController bookController;
 	private NewBookWindow newBookWFrame;
 	private InventoryReplenishmentWindow invRepWFrame;
-	private LoggedUser loggedUser = LoggedUser.getInstance();
+	private LoggedUser loggedUser;
 	private AcceptBuyingWindow acceptBuyingWFrame;
 	private ModifyPriceWindow modifyPriceWFrame;
 	private BasketController basketController;
@@ -51,6 +51,18 @@ public class SellerMainWindow extends JFrame {
 	private DefaultTableModel tableModel;
 	private MessageBox mb;
 	private EventLog eventLog;
+	private JScrollPane scrollPane;
+	private JButton btnNewBook;
+	private JButton btnStockUp;
+	private JButton btnBookModify;
+	private JButton btnBookRemove;
+	private JButton btnAcceptBuying;
+	private JLabel lblAuthor;
+	private JLabel lblSellerName;
+	private JButton btnRefresh;
+	private JLabel lblPreviousOperation;
+	private JScrollPane scrollPane_1;
+	private JTextPane textPane;
 
 	/**
 	 * Launch the application.
@@ -74,6 +86,8 @@ public class SellerMainWindow extends JFrame {
 	public SellerMainWindow() {
 		basketController = BasketController.getInstance();
 		orderController = OrderController.getInstance();
+		bookController = BookController.getInstance();
+		loggedUser = LoggedUser.getInstance();
 		mb = new MessageBox();
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -83,14 +97,14 @@ public class SellerMainWindow extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JScrollPane scrollPane = new JScrollPane();
+		scrollPane = new JScrollPane();
 		scrollPane.setBounds(28, 131, 624, 305);
 		contentPane.add(scrollPane);
 		
 		table = new JTable();
 		scrollPane.setViewportView(table);
 		
-		JButton btnNewBook = new JButton("Új könyv");
+		btnNewBook = new JButton("Új könyv");
 		btnNewBook.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {				
 				if(newBookWFrame == null) {
@@ -102,7 +116,7 @@ public class SellerMainWindow extends JFrame {
 		btnNewBook.setBounds(662, 131, 162, 40);
 		contentPane.add(btnNewBook);
 		
-		JButton btnStockUp = new JButton("Készlet feltöltés");
+		btnStockUp = new JButton("Készlet feltöltés");
 		btnStockUp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(invRepWFrame == null) {
@@ -115,8 +129,8 @@ public class SellerMainWindow extends JFrame {
 		btnStockUp.setBounds(662, 182, 162, 40);
 		contentPane.add(btnStockUp);
 		
-		JButton btnKnyvMdostsa = new JButton("Árak módosítása");
-		btnKnyvMdostsa.addActionListener(new ActionListener() {
+		btnBookModify = new JButton("Árak módosítása");
+		btnBookModify.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(modifyPriceWFrame == null) {
 					modifyPriceWFrame = new ModifyPriceWindow();
@@ -125,10 +139,10 @@ public class SellerMainWindow extends JFrame {
 				modifyPriceWFrame.setVisible(true);
 			}
 		});
-		btnKnyvMdostsa.setBounds(662, 233, 162, 40);
-		contentPane.add(btnKnyvMdostsa);
+		btnBookModify.setBounds(662, 233, 162, 40);
+		contentPane.add(btnBookModify);
 		
-		JButton btnBookRemove = new JButton("Könyv törlése");
+		btnBookRemove = new JButton("Könyv törlése");
 		btnBookRemove.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				deleteBook();
@@ -137,20 +151,19 @@ public class SellerMainWindow extends JFrame {
 		btnBookRemove.setBounds(662, 284, 162, 40);
 		contentPane.add(btnBookRemove);
 		
-		JButton btnAcceptBuying = new JButton("Vásárlás jóváhagyása");
+		btnAcceptBuying = new JButton("Vásárlás jóváhagyása");
 		btnAcceptBuying.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(acceptBuyingWFrame == null) {
 					acceptBuyingWFrame = new AcceptBuyingWindow();
 				}
-				acceptBuyingWFrame.setVisible(true);
-				
+				acceptBuyingWFrame.setVisible(true);				
 			}
 		});
 		btnAcceptBuying.setBounds(662, 367, 162, 40);
 		contentPane.add(btnAcceptBuying);
 		
-		JLabel lblAuthor = new JLabel("Szûrés:");
+		lblAuthor = new JLabel("Szûrés:");
 		lblAuthor.setBounds(28, 103, 46, 14);
 		contentPane.add(lblAuthor);
 		
@@ -165,30 +178,30 @@ public class SellerMainWindow extends JFrame {
 		contentPane.add(textField);
 		textField.setColumns(10);
 		
-		JLabel lblSellerName = new JLabel("Eladó neve: "+loggedUser.getName());
+		lblSellerName = new JLabel("Eladó neve: "+loggedUser.getName());
 		lblSellerName.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		lblSellerName.setBounds(28, 12, 261, 35);
 		contentPane.add(lblSellerName);
 		
-		JButton btnFrisst = new JButton("Frissít");
-		btnFrisst.addActionListener(new ActionListener() {
+		btnRefresh = new JButton("Frissít");
+		btnRefresh.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				tableLoad();
 			}
 		});
-		btnFrisst.setBounds(547, 84, 105, 35);
-		contentPane.add(btnFrisst);
+		btnRefresh.setBounds(547, 84, 105, 35);
+		contentPane.add(btnRefresh);
 		
-		JLabel lblKorbbiMveletek = new JLabel("Korábbi mûveletek:");
-		lblKorbbiMveletek.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblKorbbiMveletek.setBounds(28, 465, 142, 14);
-		contentPane.add(lblKorbbiMveletek);
+		lblPreviousOperation = new JLabel("Korábbi mûveletek:");
+		lblPreviousOperation.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblPreviousOperation.setBounds(28, 465, 142, 14);
+		contentPane.add(lblPreviousOperation);
 		
-		JScrollPane scrollPane_1 = new JScrollPane();
+		scrollPane_1 = new JScrollPane();
 		scrollPane_1.setBounds(28, 503, 624, 100);
 		contentPane.add(scrollPane_1);
 		
-		JTextPane textPane = new JTextPane();
+		textPane = new JTextPane();
 		scrollPane_1.setViewportView(textPane);
 		eventLog = new EventLog(textPane);
 		

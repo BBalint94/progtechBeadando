@@ -48,12 +48,20 @@ public class CustomerMainWindow extends JFrame {
 	private JTextField filterField;
 	private JTextArea textArea;
 	private DefaultTableModel tableModel;
-	private BookController bookController = BookController.getInstance();
-	private BasketController basketController = BasketController.getInstance();
-	private MessageBox mb = new MessageBox();
+	private BookController bookController;
+	private BasketController basketController;
+	private MessageBox mb;
 	private EventLog eventLog;
-	private LoggedUser loggedUser = LoggedUser.getInstance();
-	BasketWindow basketWFrame;
+	private LoggedUser loggedUser;
+	private BasketWindow basketWFrame;
+	private JButton basketBtn;
+	private JButton addToBasketBtn;
+	private JLabel filterLabel;
+	private JLabel nameLbl;
+	private JLabel previousEventLbl;
+	private JScrollPane scrollPane_1;
+	private JTextPane eventTextPane;
+	private JButton btnRefresh;
 
 	/**
 	 * Launch the application.
@@ -75,7 +83,12 @@ public class CustomerMainWindow extends JFrame {
 	 * Create the frame.
 	 */
 	public CustomerMainWindow() {
-		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		bookController = BookController.getInstance();
+		basketController = BasketController.getInstance();
+		mb = new MessageBox();
+		loggedUser = LoggedUser.getInstance();
+		
+		
 		setBounds(100, 100, 750, 700);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -89,7 +102,7 @@ public class CustomerMainWindow extends JFrame {
 		table = new JTable();
 		scrollPane.setViewportView(table);
 		
-		JButton basketBtn = new JButton("Kosár");
+		basketBtn = new JButton("Kosár");
 		basketBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(basketWFrame == null) {
@@ -102,7 +115,7 @@ public class CustomerMainWindow extends JFrame {
 		basketBtn.setBounds(526, 71, 175, 39);
 		contentPane.add(basketBtn);
 		
-		JButton addToBasketBtn = new JButton("Kosárba helyez");
+		addToBasketBtn = new JButton("Kosárba helyez");
 		addToBasketBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {				
 				addToBasket();
@@ -111,7 +124,7 @@ public class CustomerMainWindow extends JFrame {
 		addToBasketBtn.setBounds(516, 469, 185, 39);
 		contentPane.add(addToBasketBtn);
 		
-		JLabel filterLabel = new JLabel("Szûrés:");
+		filterLabel = new JLabel("Szûrés:");
 		filterLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 		filterLabel.setBounds(211, 104, 74, 14);
 		contentPane.add(filterLabel);
@@ -128,33 +141,33 @@ public class CustomerMainWindow extends JFrame {
 		filterField.setBounds(298, 101, 175, 20);
 		contentPane.add(filterField);
 		
-		JLabel nameLbl = new JLabel("Név: "+loggedUser.getName());
+		nameLbl = new JLabel("Név: "+loggedUser.getName());
 		nameLbl.setHorizontalAlignment(SwingConstants.RIGHT);
 		nameLbl.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		nameLbl.setBounds(419, 27, 282, 23);
 		contentPane.add(nameLbl);
 		
-		JLabel previousEventLbl = new JLabel("Korábbi mûveletek:");
+		previousEventLbl = new JLabel("Korábbi mûveletek:");
 		previousEventLbl.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		previousEventLbl.setBounds(26, 471, 179, 30);
 		contentPane.add(previousEventLbl);
 		
-		JScrollPane scrollPane_1 = new JScrollPane();
+		scrollPane_1 = new JScrollPane();
 		scrollPane_1.setBounds(26, 535, 675, 114);
 		contentPane.add(scrollPane_1);
 		
-		JTextPane eventTextPane = new JTextPane();
+		eventTextPane = new JTextPane();
 		scrollPane_1.setViewportView(eventTextPane);
 		eventLog = new EventLog(eventTextPane);		
 		
-		JButton btnFrisst = new JButton("Frissít");
-		btnFrisst.addActionListener(new ActionListener() {
+		btnRefresh = new JButton("Frissít");
+		btnRefresh.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				tableLoad();
 			}
 		});
-		btnFrisst.setBounds(26, 90, 175, 39);
-		contentPane.add(btnFrisst);
+		btnRefresh.setBounds(26, 90, 175, 39);
+		contentPane.add(btnRefresh);
 		
 		basketController.registerObserver(mb);
 		basketController.registerObserver(eventLog);

@@ -32,7 +32,14 @@ public class RegisterWindow extends JFrame {
 	private JPasswordField pswdField;
 	private JPasswordField pswdAgainField;
 	private JDateChooser dateChooser;
-	private UserController userController;	
+	private UserController userController;
+	private JLabel lblName;
+	private JLabel lblEmail;
+	private JLabel lblPswd;
+	private JLabel lblPswdAgain;
+	private JLabel lblBirthDate;
+	private JLabel lblAddress;
+	private JButton btnRegistration;
 
 	/**
 	 * Launch the application.
@@ -71,22 +78,22 @@ public class RegisterWindow extends JFrame {
 		contentPane.add(emailField);
 		emailField.setColumns(10);
 		
-		JLabel lblName = new JLabel("Név:");
+		lblName = new JLabel("Név:");
 		lblName.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblName.setBounds(10, 14, 157, 14);
 		contentPane.add(lblName);
 		
-		JLabel lblEmail = new JLabel("Email:");
+		lblEmail = new JLabel("Email:");
 		lblEmail.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblEmail.setBounds(10, 45, 157, 14);
 		contentPane.add(lblEmail);
 		
-		JLabel lblPswd = new JLabel("Jelszó:");
+		lblPswd = new JLabel("Jelszó:");
 		lblPswd.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblPswd.setBounds(10, 76, 157, 14);
 		contentPane.add(lblPswd);
 		
-		JLabel lblPswdAgain = new JLabel("Jelszó mégegyszer:");
+		lblPswdAgain = new JLabel("Jelszó mégegyszer:");
 		lblPswdAgain.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblPswdAgain.setBounds(10, 107, 157, 14);
 		contentPane.add(lblPswdAgain);
@@ -98,7 +105,7 @@ public class RegisterWindow extends JFrame {
 		dateChooser.setDate(date);
 		contentPane.add(dateChooser);
 		
-		JLabel lblBirthDate = new JLabel("Születési dátum:");
+		lblBirthDate = new JLabel("Születési dátum:");
 		lblBirthDate.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblBirthDate.setBounds(10, 141, 157, 14);
 		contentPane.add(lblBirthDate);
@@ -108,12 +115,12 @@ public class RegisterWindow extends JFrame {
 		contentPane.add(addressField);
 		addressField.setColumns(10);
 		
-		JLabel lblAddress = new JLabel("Lakcím:");
+		lblAddress = new JLabel("Lakcím:");
 		lblAddress.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblAddress.setBounds(10, 169, 157, 14);
 		contentPane.add(lblAddress);
 		
-		JButton btnRegistration = new JButton("Regisztráció");
+		btnRegistration = new JButton("Regisztráció");
 		btnRegistration.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				 registration();

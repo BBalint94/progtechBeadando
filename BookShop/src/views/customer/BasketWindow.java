@@ -41,14 +41,19 @@ public class BasketWindow extends JFrame {
 	private JPanel contentPane;
 	private JTable table;
 	private Basket basket;
-	private BasketController basketController = BasketController.getInstance();
-	private OrderController orderController = OrderController.getInstance();
-	private LoggedUser loggedUser = LoggedUser.getInstance();
+	private BasketController basketController;
+	private OrderController orderController;
+	private LoggedUser loggedUser;
 	private DefaultTableModel tableModel;
-	private JLabel lblFizetend;
-	private JRadioButton rdbtnFutrft;
-	private JRadioButton rdbtnCsomagautomataft;
-	private JRadioButton rdbtnSzemlyestvtel;	
+	private JLabel lblOwing;
+	private JRadioButton rdbtnCourier;
+	private JRadioButton rdbtnPackageAutomat;
+	private JRadioButton rdbtnPersonalReceipt;
+	private ButtonGroup group;
+	private JButton btnDelete;
+	private JButton btnBuy;
+	private JLabel lblTransportType;
+	private JScrollPane scrollPane;
 	private int sumPrice;
 
 	/**
@@ -70,8 +75,11 @@ public class BasketWindow extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public BasketWindow() {		
-		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	public BasketWindow() {			
+		basketController = BasketController.getInstance();
+		orderController = OrderController.getInstance();
+		loggedUser = LoggedUser.getInstance();
+		
 		setBounds(100, 100, 650, 400);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -79,65 +87,58 @@ public class BasketWindow extends JFrame {
 		contentPane.setLayout(null);
 		
 		basket = basketController.getBasket(loggedUser.getUserId());
-		Object[] columns = {"Id","Szerzõ","Cím","Ár","Instance"};				
-		tableModel = new DefaultTableModel();
-		tableModel.setColumnIdentifiers(columns);
-		for (Book b : basket.getBooks()) {
-			sumPrice += b.getPrice();
-			Object[] rows = {b.getId(),b.getAuthor(),b.getTitle(), b.getPrice(), b.getInstanceId()};			
-			tableModel.addRow(rows);			
-		}
+		fillTable(basket);
 		
-		rdbtnFutrft = new JRadioButton("Futár (+1000Ft)");
-		rdbtnFutrft.setBounds(436, 127, 174, 23);
-		contentPane.add(rdbtnFutrft);
+		rdbtnCourier = new JRadioButton("Futár (+1000Ft)");
+		rdbtnCourier.setBounds(436, 127, 174, 23);
+		contentPane.add(rdbtnCourier);
 		
-		rdbtnCsomagautomataft = new JRadioButton("Csomagautomata(+700Ft)");
-		rdbtnCsomagautomataft.setBounds(436, 165, 174, 23);
-		contentPane.add(rdbtnCsomagautomataft);
+		rdbtnPackageAutomat = new JRadioButton("Csomagautomata(+700Ft)");
+		rdbtnPackageAutomat.setBounds(436, 165, 174, 23);
+		contentPane.add(rdbtnPackageAutomat);
 		
-		rdbtnSzemlyestvtel = new JRadioButton("Személyes Átvétel");
-		rdbtnSzemlyestvtel.setBounds(436, 203, 174, 23);
-		contentPane.add(rdbtnSzemlyestvtel);
+		rdbtnPersonalReceipt = new JRadioButton("Személyes Átvétel");
+		rdbtnPersonalReceipt.setBounds(436, 203, 174, 23);
+		contentPane.add(rdbtnPersonalReceipt);
 		
-		ButtonGroup group = new ButtonGroup();
-		group.add(rdbtnFutrft);
-		group.add(rdbtnCsomagautomataft);
-		group.add(rdbtnSzemlyestvtel);
+		group = new ButtonGroup();
+		group.add(rdbtnCourier);
+		group.add(rdbtnPackageAutomat);
+		group.add(rdbtnPersonalReceipt);
 		
-		rdbtnFutrft.setSelected(true);
+		rdbtnCourier.setSelected(true);
 		
-		JButton btnTrls = new JButton("Törlés");
-		btnTrls.addActionListener(new ActionListener() {
+		btnDelete = new JButton("Törlés");
+		btnDelete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				remove();				
 			}
 		});
-		btnTrls.setBounds(436, 29, 140, 40);
-		contentPane.add(btnTrls);
+		btnDelete.setBounds(436, 29, 140, 40);
+		contentPane.add(btnDelete);
 	
-		JButton btnVsrls = new JButton("Vásárlás");
-		btnVsrls.addActionListener(new ActionListener() {
+		btnBuy = new JButton("Vásárlás");
+		btnBuy.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				sendOrder();
 				refreshTable();
 			}
 		});
-		btnVsrls.setBounds(436, 292, 140, 40);
-		contentPane.add(btnVsrls);
+		btnBuy.setBounds(436, 292, 140, 40);
+		contentPane.add(btnBuy);
 		
-		lblFizetend = new JLabel("Fizetend\u0151:");
-		lblFizetend.setHorizontalAlignment(SwingConstants.LEFT);
-		lblFizetend.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblFizetend.setBounds(27, 270, 393, 29);		
-		lblFizetend.setText("Fizetendõ: "+sumPrice + " Ft");
-		contentPane.add(lblFizetend);	
+		lblOwing = new JLabel("Fizetendõ:");
+		lblOwing.setHorizontalAlignment(SwingConstants.LEFT);
+		lblOwing.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblOwing.setBounds(27, 270, 393, 29);		
+		lblOwing.setText("Fizetendõ: "+sumPrice + " Ft");
+		contentPane.add(lblOwing);	
 		
-		JLabel lblRendelstvtelnekMdja = new JLabel("Rendelés átvételének módja:");
-		lblRendelstvtelnekMdja.setBounds(440, 93, 170, 14);
-		contentPane.add(lblRendelstvtelnekMdja);
+		lblTransportType = new JLabel("Rendelés átvételének módja:");
+		lblTransportType.setBounds(440, 93, 170, 14);
+		contentPane.add(lblTransportType);
 		
-		JScrollPane scrollPane = new JScrollPane();
+		scrollPane = new JScrollPane();
 		scrollPane.setBounds(27, 29, 393, 230);
 		contentPane.add(scrollPane);
 		
@@ -176,15 +177,26 @@ public class BasketWindow extends JFrame {
 		table.getColumnModel().getColumn(4).setMinWidth(0);
 		table.getColumnModel().getColumn(4).setPreferredWidth(0);
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		lblFizetend.setText("Fizetendõ: "+sumPrice+" Ft");
+		lblOwing.setText("Fizetendõ: "+sumPrice+" Ft");
+	}
+	
+	public void fillTable(Basket basket) {
+		Object[] columns = {"Id","Szerzõ","Cím","Ár","Instance"};				
+		tableModel = new DefaultTableModel();
+		tableModel.setColumnIdentifiers(columns);
+		for (Book b : basket.getBooks()) {
+			sumPrice += b.getPrice();
+			Object[] rows = {b.getId(),b.getAuthor(),b.getTitle(), b.getPrice(), b.getInstanceId()};			
+			tableModel.addRow(rows);			
+		}
 	}
 	
 	public void sendOrder() {
-		if(rdbtnFutrft.isSelected()) {
+		if(rdbtnCourier.isSelected()) {
 			loggedUser.setTransportStrategy(new WithCourier());
-		}else if(rdbtnCsomagautomataft.isSelected()) {
+		}else if(rdbtnPackageAutomat.isSelected()) {
 			loggedUser.setTransportStrategy(new PackageAutomat());
-		}else if(rdbtnSzemlyestvtel.isSelected()) {
+		}else if(rdbtnPersonalReceipt.isSelected()) {
 			loggedUser.setTransportStrategy(new NoNeed());
 		}
 		Order order = new Order();

@@ -28,12 +28,15 @@ import java.awt.event.ActionEvent;
 public class AcceptBuyingWindow extends JFrame {
 
 	private JPanel contentPane;
-	private OrderController orderController = OrderController.getInstance();
-	private BookController bookController = BookController.getInstance();
-	private BasketController basketController = BasketController.getInstance();
+	private OrderController orderController;
+	private BookController bookController;
+	private BasketController basketController;
 	private JComboBox comboBox;
 	private JTextArea textArea;
 	private DefaultComboBoxModel dm;
+	private JButton btnListing;
+	private JButton btnAccept;
+	private JButton btnRefresh;
 
 	/**
 	 * Launch the application.
@@ -56,8 +59,10 @@ public class AcceptBuyingWindow extends JFrame {
 	 */
 	public AcceptBuyingWindow() {
 		dm = new DefaultComboBoxModel();
-		
-		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		orderController = OrderController.getInstance();
+		bookController = BookController.getInstance();
+		basketController = BasketController.getInstance();
+				
 		setBounds(100, 100, 550, 400);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -74,32 +79,32 @@ public class AcceptBuyingWindow extends JFrame {
 		textArea.setBounds(66, 101, 390, 184);
 		contentPane.add(textArea);
 		
-		JButton btnListz = new JButton("Listáz");
-		btnListz.addActionListener(new ActionListener() {
+		btnListing = new JButton("Listáz");
+		btnListing.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				orderContent();			
 			}
 		});
-		btnListz.setBounds(367, 67, 89, 23);
-		contentPane.add(btnListz);
+		btnListing.setBounds(367, 67, 89, 23);
+		contentPane.add(btnListing);
 		
-		JButton btnElfogads = new JButton("Elfogadás");
-		btnElfogads.addActionListener(new ActionListener() {
+		btnAccept = new JButton("Elfogadás");
+		btnAccept.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				acceptOrder();		
 			}
 		});
-		btnElfogads.setBounds(367, 317, 89, 23);
-		contentPane.add(btnElfogads);	
+		btnAccept.setBounds(367, 317, 89, 23);
+		contentPane.add(btnAccept);	
 		
-		JButton btnFrisst = new JButton("Frissít");
-		btnFrisst.addActionListener(new ActionListener() {
+		btnRefresh = new JButton("Frissít");
+		btnRefresh.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				refreshComboBox();
 			}
 		});
-		btnFrisst.setBounds(66, 67, 89, 23);
-		contentPane.add(btnFrisst);
+		btnRefresh.setBounds(66, 67, 89, 23);
+		contentPane.add(btnRefresh);
 		
 	}
 	

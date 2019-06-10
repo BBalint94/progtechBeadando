@@ -28,6 +28,9 @@ public class ModifyPriceWindow extends JFrame {
 	private JComboBox comboBox;
 	private JSpinner spinner;
 	private DefaultComboBoxModel dm;
+	private JLabel lblFt;
+	private JLabel lbNewPrice;
+	private JButton btnModify;
 
 	/**
 	 * Launch the application.
@@ -51,7 +54,7 @@ public class ModifyPriceWindow extends JFrame {
 	public ModifyPriceWindow() {
 		bookController = BookController.getInstance();
 		dm = new DefaultComboBoxModel();
-		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
 		setBounds(100, 100, 350, 200);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -69,15 +72,15 @@ public class ModifyPriceWindow extends JFrame {
 		spinner.setBounds(122, 72, 113, 20);
 		contentPane.add(spinner);
 		
-		JLabel lblFt = new JLabel("Ft");
+		lblFt = new JLabel("Ft");
 		lblFt.setBounds(245, 75, 46, 14);
 		contentPane.add(lblFt);
 		
-		JLabel lbNewPrice = new JLabel("Új ár:");
+		lbNewPrice = new JLabel("Új ár:");
 		lbNewPrice.setBounds(66, 75, 46, 14);
 		contentPane.add(lbNewPrice);
 		
-		JButton btnModify = new JButton("Módosít");
+		btnModify = new JButton("Módosít");
 		btnModify.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				sendPrice();

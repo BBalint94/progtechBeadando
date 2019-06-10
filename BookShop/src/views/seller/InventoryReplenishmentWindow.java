@@ -26,10 +26,12 @@ import java.awt.event.ActionEvent;
 public class InventoryReplenishmentWindow extends JFrame {
 
 	private JPanel contentPane;
-	private BookController bookController = BookController.getInstance();
+	private BookController bookController;
 	private JComboBox comboBox;
 	private JSpinner spinner;
 	private DefaultComboBoxModel dm;
+	private JButton btnUpload;
+	private JLabel lblQuantity;
 
 	/**
 	 * Launch the application.
@@ -50,9 +52,10 @@ public class InventoryReplenishmentWindow extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public InventoryReplenishmentWindow() {
-		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	public InventoryReplenishmentWindow() {		
 		dm = new DefaultComboBoxModel();
+		bookController = BookController.getInstance();
+		
 		setBounds(100, 100, 350, 200);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -64,18 +67,18 @@ public class InventoryReplenishmentWindow extends JFrame {
 		spinner.setBounds(110, 78, 110, 20);
 		contentPane.add(spinner);
 		
-		JButton btnFeltlts = new JButton("Feltöltés");
-		btnFeltlts.addActionListener(new ActionListener() {
+		btnUpload = new JButton("Feltöltés");
+		btnUpload.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				sendQuantity();
 			}
 		});
-		btnFeltlts.setBounds(110, 128, 110, 23);
-		contentPane.add(btnFeltlts);
+		btnUpload.setBounds(110, 128, 110, 23);
+		contentPane.add(btnUpload);
 		
-		JLabel lblMennyisg = new JLabel("Mennyiség:");
-		lblMennyisg.setBounds(27, 81, 73, 14);
-		contentPane.add(lblMennyisg);		
+		lblQuantity = new JLabel("Mennyiség:");
+		lblQuantity.setBounds(27, 81, 73, 14);
+		contentPane.add(lblQuantity);		
 		
 		fillComboBox();
 		comboBox = new JComboBox();

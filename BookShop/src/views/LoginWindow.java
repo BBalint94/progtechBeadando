@@ -30,10 +30,15 @@ public class LoginWindow {
 	private JFrame frame;
 	private JTextField emailField;
 	private JPasswordField pswdField;
-	private DatabaseManager dbManager = DatabaseManager.getInstance();
-	private UserController userController = UserController.getInstance();
-	private LoggedUser loggedUser = LoggedUser.getInstance();
+	private DatabaseManager dbManager;
+	private UserController userController;
+	private LoggedUser loggedUser;
 	private MessageBox mb;
+	private JLabel lblEmail;
+	private JLabel lblPswd;
+	private JButton btnLogin;
+	private JButton btnRegistration;
+	private JLabel lblBookshop;
 
 	/**
 	 * Launch the application.
@@ -62,6 +67,9 @@ public class LoginWindow {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		dbManager = DatabaseManager.getInstance();
+		userController = UserController.getInstance();
+		loggedUser = LoggedUser.getInstance();
 		mb = new MessageBox();
 		
 		frame = new JFrame();
@@ -69,12 +77,12 @@ public class LoginWindow {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
-		JLabel lblEmail = new JLabel("E-mail:");
+		lblEmail = new JLabel("E-mail:");
 		lblEmail.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblEmail.setBounds(10, 81, 120, 14);
 		frame.getContentPane().add(lblEmail);
 		
-		JLabel lblPswd = new JLabel("Jelszó:");
+		lblPswd = new JLabel("Jelszó:");
 		lblPswd.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblPswd.setBounds(10, 116, 120, 14);
 		frame.getContentPane().add(lblPswd);
@@ -88,7 +96,7 @@ public class LoginWindow {
 		pswdField.setBounds(140, 113, 143, 20);
 		frame.getContentPane().add(pswdField);
 		
-		JButton btnLogin = new JButton("Bejelentkezés");
+		btnLogin = new JButton("Bejelentkezés");
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				login();			
@@ -97,7 +105,7 @@ public class LoginWindow {
 		btnLogin.setBounds(140, 158, 143, 23);
 		frame.getContentPane().add(btnLogin);
 		
-		JButton btnRegistration = new JButton("Regisztráció");
+		btnRegistration = new JButton("Regisztráció");
 		btnRegistration.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				RegisterWindow registerWFrame = new RegisterWindow();
@@ -107,7 +115,7 @@ public class LoginWindow {
 		btnRegistration.setBounds(140, 213, 143, 23);
 		frame.getContentPane().add(btnRegistration);
 		
-		JLabel lblBookshop = new JLabel("BookShop");
+		lblBookshop = new JLabel("BookShop");
 		lblBookshop.setHorizontalAlignment(SwingConstants.CENTER);
 		lblBookshop.setFont(new Font("Tahoma", Font.PLAIN, 26));
 		lblBookshop.setBounds(96, 22, 215, 33);
